@@ -25,7 +25,7 @@ def main():
     global timer_event
     global button_pressed
 
-    PWM_mode = 0  # 0 = off, 1 = fade-in, 2 = pulse, 3 = fade-out, 4 = on
+    mode = 0  # 0 = off, 1 = fade-in, 2 = pulse, 3 = fade-out, 4 = on
     i = 0
 
     led = PWMLed(3)
@@ -48,7 +48,7 @@ def main():
         print("Timer is running; Press the button; press Ctrl+C to stop.")
 
         while True: 
-            if timer_event and PWM_mode == 2:
+            if timer_event and mode == 2:
                 timer_event = False
 
                 if i < 200:
@@ -67,21 +67,21 @@ def main():
 
                 print("Mode changed")
 
-                if PWM_mode < 4:
-                    PWM_mode += 1
+                if mode < 4:
+                    mode += 1
                     i = 0
                 else:
-                    PWM_mode = 0
+                    mode = 0
 
-                print(f"Mode: {PWM_mode}")
+                print(f"Mode: {mode}")
 
-                if PWM_mode == 0:
+                if mode == 0:
                     led.off()
-                elif PWM_mode == 1:
+                elif mode == 1:
                     led.fade_in(2)
-                elif PWM_mode == 3:
+                elif mode == 3:
                     led.fade_out(2)
-                elif PWM_mode == 4:
+                elif mode == 4:
                     led.on()
 
             time.sleep_ms(10)

@@ -25,7 +25,7 @@ def main():
     global timer_event
     global button_pressed
 
-    led_last_on = 0
+    mode = 0
 
     led1 = Led(2)
     led2 = Led(3)
@@ -51,19 +51,21 @@ def main():
         while True:
             if timer_event:
                 timer_event = False
-                if led1.value() != led2.value():
-                    led1.toggle()
-                    led2.toggle()
-                    led_last_on = 0 if led1.value() else 1
-                else:
-                    if led_last_on:
-                        led2.toggle()
-                    else:
-                        led1.toggle()
+
+                led1.toggle()
+                led2.toggle()
             elif button_pressed:
                 button_pressed = False
-                led1.on()
-                led2.on()
+
+                mode = not mode
+                print(f"Mode {mode+1}")
+
+                if mode == 0:
+                    led1.on()
+                    led2.off()
+                elif mode == 1:
+                    led1.on()
+                    led2.on()
 
             time.sleep_ms(10)
 
